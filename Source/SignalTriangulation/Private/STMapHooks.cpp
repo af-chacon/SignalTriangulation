@@ -1,5 +1,6 @@
 #include "STMapHooks.h"
 
+#include "Blueprint/UserWidget.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Patching/BlueprintHookManager.h"
