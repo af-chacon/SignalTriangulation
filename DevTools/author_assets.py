@@ -88,6 +88,8 @@ def make_brush(texture):
 
 
 PURCHASED_DEP_BP = "/Game/FactoryGame/AvailabilityDependencies/BP_SchematicPurchasedDependency.BP_SchematicPurchasedDependency_C"
+INFO_UNLOCK_BP = "/Game/FactoryGame/Unlocks/BP_UnlockInfoOnly.BP_UnlockInfoOnly_C"
+RADAR_TOWER_DESC = "/Game/FactoryGame/Buildable/Factory/RadarTower/Desc_RadarTower.Desc_RadarTower_C"
 
 
 def make_purchased_dependency(outer, schematic_classes):
@@ -95,6 +97,27 @@ def make_purchased_dependency(outer, schematic_classes):
     dep.set_editor_property("mSchematics", schematic_classes)
     dep.set_editor_property("mRequireAllSchematicsToBePurchased", True)
     return dep
+
+
+def make_info_unlock(outer):
+    """Cosmetic 'Rewards:' entry - the actual behavior is implemented in C++."""
+    unlock = unreal.new_object(load_class(INFO_UNLOCK_BP), outer=outer)
+    unlock.set_editor_property("mUnlockName", "Artifact Triangulation")
+    unlock.set_editor_property(
+        "mUnlockDescription",
+        "Radar towers now cross-reference their return signals, revealing the exact map "
+        "locations of all Somersloops, Mercer Spheres, and FICSIT crash sites.",
+    )
+    tower_cls = load_class(RADAR_TOWER_DESC)
+    tower_cdo = unreal.get_default_object(tower_cls)
+    for prop, target in (("mPersistentBigIcon", "mUnlockIconBig"), ("mSmallIcon", "mUnlockIconSmall")):
+        try:
+            tex = tower_cdo.get_editor_property(prop)
+            if tex:
+                unlock.set_editor_property(target, tex)
+        except Exception as e:
+            log("Unlock icon {} skipped: {}".format(target, e))
+    return unlock
 
 
 # ---------------------------------------------------------------- schematic
@@ -130,6 +153,7 @@ if icon_tex:
 radar_cls = load_class(RADAR_RESEARCH)
 dependency_classes = [radar_cls, load_class(SOMERSLOOP_RESEARCH), load_class(MERCER_RESEARCH)]
 sch_cdo.set_editor_property("mSchematicDependencies", [make_purchased_dependency(sch_cdo, dependency_classes)])
+sch_cdo.set_editor_property("mUnlocks", [make_info_unlock(sch_cdo)])
 
 log("Schematic configured")
 
