@@ -1,0 +1,35 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"SemVersion": "1.0.0",
+	"GameVersion": ">=491125",
+	"FriendlyName": "Signal Triangulation",
+	"Description": "Adds a MAM research node after Radar Technology in the Quartz tree that triangulates the exact map locations of all uncollected Somersloops, Mercer Spheres, and crash sites. Each artifact type gets its own map filter category, and markers disappear as you collect them.",
+	"Category": "Modding",
+	"CreatedBy": "aedis",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"AcceptsAnyRemoteVersion": false,
+	"RequiredOnRemote": true,
+	"Modules": [
+		{
+			"Name": "SignalTriangulation",
+			"Type": "Runtime",
+			"LoadingPhase": "PostDefault"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SML",
+			"SemVersion": "^3.12.0",
+			"Enabled": true
+		}
+	]
+}
