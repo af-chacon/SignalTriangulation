@@ -106,7 +106,8 @@ def make_info_unlock(outer):
     unlock.set_editor_property(
         "mUnlockDescription",
         "Radar towers now cross-reference their return signals, revealing the exact map "
-        "locations of all Somersloops, Mercer Spheres, and FICSIT crash sites.",
+        "locations of all Somersloops, Mercer Spheres, and FICSIT crash sites within "
+        "their coverage radius. Expand your radar network to triangulate more.",
     )
     tower_cls = load_class(RADAR_TOWER_DESC)
     tower_cdo = unreal.get_default_object(tower_cls)
@@ -128,7 +129,7 @@ sch_cdo.set_editor_property("mDisplayName", "Signal Triangulation")
 sch_cdo.set_editor_property(
     "mDescription",
     "Cross-references radar tower return signals to triangulate the precise map position of every "
-    "Somersloop, Mercer Sphere, and FICSIT crash site on the planet.",
+    "Somersloop, Mercer Sphere, and FICSIT crash site within your radar network's coverage.",
 )
 sch_cdo.set_editor_property("mType", unreal.SchematicType.EST_MAM)
 sch_cdo.set_editor_property("mTechTier", 3)

@@ -7,8 +7,8 @@ Signal Triangulation
 SignalTriangulation
 
 ## Short description (shown under the icon in the mod list and in search)
-Reveals every Somersloop, Mercer Sphere, and crash site hard drive on the map after a MAM
-research. Filterable markers that disappear as you collect.
+Radar towers reveal exact Somersloop, Mercer Sphere, and crash site locations on the map
+after a MAM research. Filterable markers that disappear as you collect.
 
 ## Source link
 https://github.com/af-chacon/SignalTriangulation
@@ -31,8 +31,9 @@ location, even in unexplored areas.
 
 ### Features
 
-- 🗺️ Map markers with proper artifact icons for all ~100+ Somersloops, ~100+ Mercer
-  Spheres, and every unlooted crash site
+- 🗺️ Map markers with proper artifact icons for every Somersloop, Mercer Sphere, and
+  unlooted crash site **inside your powered radar towers' coverage** — grow the network
+  to find them all (or set `ST.RequireRadarCoverage 0` for whole-map reveal)
 - ✅ Markers disappear automatically (within ~10 s) when you collect an artifact or loot a
   crash site
 - 🎚️ Each artifact type is its own map filter category — toggle Somersloops, Mercer

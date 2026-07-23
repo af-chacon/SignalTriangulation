@@ -1,5 +1,7 @@
 #include "STMarkerSubsystem.h"
 
+#include "Buildables/FGBuildableRadarTower.h"
+#include "EngineUtils.h"
 #include "FGSchematic.h"
 #include "FGSchematicManager.h"
 #include "FGScannableSubsystem.h"
@@ -31,6 +33,9 @@ namespace
 	TAutoConsoleVariable<int32> CVarShowHardDrives(
 		TEXT("ST.ShowHardDrives"), 1,
 		TEXT("Signal Triangulation: show crash site markers on the map"));
+	TAutoConsoleVariable<int32> CVarRequireRadarCoverage(
+		TEXT("ST.RequireRadarCoverage"), 1,
+		TEXT("Signal Triangulation: only reveal artifacts inside a powered radar tower's reveal radius (0 = whole map)"));
 }
 
 ASTMarkerSubsystem::ASTMarkerSubsystem()
@@ -124,12 +129,42 @@ void ASTMarkerSubsystem::Reconcile()
 	const bool bShowSpheres = bUnlocked && CVarShowMercerSpheres.GetValueOnGameThread() != 0;
 	const bool bShowDrives = bUnlocked && CVarShowHardDrives.GetValueOnGameThread() != 0;
 
+	// Triangulation only works inside the radar network: collect powered towers so artifacts
+	// outside every reveal radius stay hidden (and get pruned if a tower loses power)
+	TArray<const AFGBuildableRadarTower*> PoweredTowers;
+	const bool bRequireCoverage = CVarRequireRadarCoverage.GetValueOnGameThread() != 0;
+	if (bRequireCoverage && bUnlocked)
+	{
+		for (TActorIterator<AFGBuildableRadarTower> It(GetWorld()); It; ++It)
+		{
+			if (IsValid(*It) && It->HasPower())
+			{
+				PoweredTowers.Add(*It);
+			}
+		}
+	}
+	auto IsInCoverage = [bRequireCoverage, &PoweredTowers](const FVector& Location)
+	{
+		if (!bRequireCoverage)
+		{
+			return true;
+		}
+		for (const AFGBuildableRadarTower* Tower : PoweredTowers)
+		{
+			if (Tower->IsLocationWithinRevealRadius(Location))
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
 	TSet<FGuid> WantedPickups;
 	TSet<FGuid> WantedDropPods;
 
 	for (const FWorldScannableData& Pickup : Scannables->GetAvailableItemPickups())
 	{
-		if (!Pickup.ActorClass || !Scannables->DoesPickupExist(Pickup.ActorGuid))
+		if (!Pickup.ActorClass || !Scannables->DoesPickupExist(Pickup.ActorGuid) || !IsInCoverage(Pickup.ActorLocation))
 		{
 			continue;
 		}
@@ -163,7 +198,7 @@ void ASTMarkerSubsystem::Reconcile()
 	{
 		for (const FWorldScannableData& DropPod : Scannables->GetAvailableDropPods())
 		{
-			if (Scannables->HasDropPodBeenLooted(DropPod.ActorGuid))
+			if (Scannables->HasDropPodBeenLooted(DropPod.ActorGuid) || !IsInCoverage(DropPod.ActorLocation))
 			{
 				continue;
 			}

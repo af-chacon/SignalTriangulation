@@ -5,7 +5,7 @@
 	"SemVersion": "1.0.0",
 	"GameVersion": ">=495413",
 	"FriendlyName": "Signal Triangulation",
-	"Description": "Adds a MAM research node after Radar Technology in the Quartz tree that triangulates the exact map locations of all uncollected Somersloops, Mercer Spheres, and crash sites. Each artifact type gets its own map filter category, and markers disappear as you collect them.",
+	"Description": "Adds a MAM research node after Radar Technology that triangulates the exact map locations of uncollected Somersloops, Mercer Spheres, and crash sites within your radar towers' coverage. Each artifact type gets its own map filter category, and markers disappear as you collect them.",
 	"Category": "Modding",
 	"CreatedBy": "aedis",
 	"CreatedByURL": "https://github.com/af-chacon",

@@ -10,9 +10,9 @@ uncollected **Somersloop**, **Mercer Sphere**, and **crash site** on the planet.
   (cost: 1× Hard Drive, 1× Somersloop, 3× Mercer Sphere, 10× Superposition Oscillator;
   3-second analysis). Also requires the vanilla Somersloop/Mercer Sphere Analysis
   researches from the Alien Technology tree.
-- Map markers with proper artifact icons for every uncollected artifact, sourced from the
-  game's own world-scannable data (works for unexplored areas — that's the fantasy: your
-  radar towers triangulated them).
+- Map markers with proper artifact icons for every uncollected artifact **within the
+  reveal radius of a powered radar tower** — expand your radar network to triangulate
+  more of the planet. (`ST.RequireRadarCoverage 0` reverts to whole-map reveal.)
 - Markers disappear automatically within ~10 seconds of collecting an artifact or looting
   a crash site.
 - Each artifact type is its own map filter category (Somersloops / Mercer Spheres /
@@ -25,6 +25,7 @@ uncollected **Somersloop**, **Mercer Sphere**, and **crash site** on the planet.
 | `ST.ShowSomersloops` | 1 | Show/hide Somersloop markers |
 | `ST.ShowMercerSpheres` | 1 | Show/hide Mercer Sphere markers |
 | `ST.ShowHardDrives` | 1 | Show/hide crash site markers |
+| `ST.RequireRadarCoverage` | 1 | Only reveal inside powered radar tower coverage |
 | `ST.ForceUnlock` | 0 | Treat the research as unlocked (testing) |
 
 Changes apply within ~10 seconds.
