@@ -22,9 +22,11 @@ location, even in unexplored areas.
 
 ### How to unlock
 
-1. Research **Radar Technology** in the Quartz MAM tree (the vanilla Radar Tower node).
-2. A new node, **Signal Triangulation**, appears below it: 5× Crystal Oscillator,
-   2× Heavy Modular Frame.
+1. Research **Radar Technology** in the Quartz MAM tree (the vanilla Radar Tower node),
+   plus **Somersloop Analysis** and **Mercer Sphere Analysis** in the Alien Technology
+   tree — your radar can't triangulate signals it can't classify.
+2. A new node, **Signal Triangulation**, appears below Radar Technology:
+   1× Hard Drive, 1× Somersloop, 3× Mercer Sphere, 10× Superposition Oscillator.
 3. Research it and open your map.
 
 ### Features

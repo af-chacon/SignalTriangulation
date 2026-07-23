@@ -10,10 +10,18 @@ SCHEMATIC_NAME = "Schematic_SignalTriangulation"
 TREE_NAME = "ResearchTree_SignalTriangulation"
 
 RADAR_RESEARCH = "/Game/FactoryGame/Schematics/Research/Quartz_RS/Research_Quartz_4.Research_Quartz_4_C"
+# The node is thematically the overlap of the Quartz and Alien Technology trees: it also
+# requires the vanilla artifact-analysis researches that teach radar towers to detect them.
+SOMERSLOOP_RESEARCH = "/Game/FactoryGame/Schematics/Research/AlienTech_RS/Research_Alien_Somersloop.Research_Alien_Somersloop_C"
+MERCER_RESEARCH = "/Game/FactoryGame/Schematics/Research/AlienTech_RS/Research_Alien_MercerSphere.Research_Alien_MercerSphere_C"
 NODE_BP_CLASS = "/Game/FactoryGame/Schematics/Research/BPD_ResearchTreeNode.BPD_ResearchTreeNode_C"
+# Cost shape follows the fuel researches (1x hard drive + materials): pay with the artifacts
+# themselves plus Superposition Oscillators (internally "QuantumOscillator") as the late-game anchor.
 COST_ITEMS = [
-    ("/Game/FactoryGame/Resource/Parts/CrystalOscillator/Desc_CrystalOscillator.Desc_CrystalOscillator_C", 5),
-    ("/Game/FactoryGame/Resource/Parts/ModularFrameHeavy/Desc_ModularFrameHeavy.Desc_ModularFrameHeavy_C", 2),
+    ("/Game/FactoryGame/Resource/Environment/CrashSites/Desc_HardDrive.Desc_HardDrive_C", 1),
+    ("/Game/FactoryGame/Prototype/WAT/Desc_WAT2.Desc_WAT2_C", 3),
+    ("/Game/FactoryGame/Prototype/WAT/Desc_WAT1.Desc_WAT1_C", 1),
+    ("/Game/FactoryGame/Resource/Parts/QuantumOscillator/Desc_QuantumOscillator.Desc_QuantumOscillator_C", 10),
 ]
 # Icon: reuse the hard drive descriptor's icon texture (resolved from the placeholder CDO below)
 ICON_DESC = "/Game/FactoryGame/Resource/Environment/CrashSites/Desc_HardDrive.Desc_HardDrive_C"
@@ -120,7 +128,8 @@ if icon_tex:
         log("mSmallSchematicIcon skipped: {}".format(e))
 
 radar_cls = load_class(RADAR_RESEARCH)
-sch_cdo.set_editor_property("mSchematicDependencies", [make_purchased_dependency(sch_cdo, [radar_cls])])
+dependency_classes = [radar_cls, load_class(SOMERSLOOP_RESEARCH), load_class(MERCER_RESEARCH)]
+sch_cdo.set_editor_property("mSchematicDependencies", [make_purchased_dependency(sch_cdo, dependency_classes)])
 
 log("Schematic configured")
 

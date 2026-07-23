@@ -7,7 +7,9 @@ uncollected **Somersloop**, **Mercer Sphere**, and **crash site** on the planet.
 ## Features
 
 - New MAM research node grafted into the vanilla Quartz tree below Radar Technology
-  (cost: 5× Crystal Oscillator, 2× Heavy Modular Frame; 3-second analysis).
+  (cost: 1× Hard Drive, 1× Somersloop, 3× Mercer Sphere, 10× Superposition Oscillator;
+  3-second analysis). Also requires the vanilla Somersloop/Mercer Sphere Analysis
+  researches from the Alien Technology tree.
 - Map markers with proper artifact icons for every uncollected artifact, sourced from the
   game's own world-scannable data (works for unexplored areas — that's the fantasy: your
   radar towers triangulated them).
