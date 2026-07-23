@@ -10,6 +10,13 @@ namespace STRepresentationTypes
 
 	void ExpandEnum()
 	{
+		// Never mutate the engine enum inside the editor process - editor serialization could
+		// bake the transient values into assets. Markers degrade to RT_Default ("Other") in PIE.
+		if (GIsEditor)
+		{
+			return;
+		}
+
 		static bool bExpanded = false;
 		if (bExpanded)
 		{

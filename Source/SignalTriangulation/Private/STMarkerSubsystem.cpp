@@ -48,6 +48,14 @@ void ASTMarkerSubsystem::BeginPlay()
 void ASTMarkerSubsystem::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
 	GetWorld()->GetTimerManager().ClearTimer(mReconcileTimerHandle);
+	if (bDelegateBound)
+	{
+		if (AFGSchematicManager* SchematicManager = AFGSchematicManager::Get(GetWorld()))
+		{
+			SchematicManager->PurchasedSchematicDelegate.RemoveDynamic(this, &ASTMarkerSubsystem::OnSchematicPurchased);
+		}
+		bDelegateBound = false;
+	}
 	Super::EndPlay(EndPlayReason);
 }
 
